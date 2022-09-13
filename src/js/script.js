@@ -1,4 +1,5 @@
 const recipeContainer = document.querySelector('.recipe');
+let searchResultsV = document.querySelector('.search-results');
 let message = document.querySelector('.message');
 const timeout = function (s) {
   return new Promise(function (_, reject) {
@@ -9,7 +10,8 @@ const timeout = function (s) {
 };
 
 // https://forkify-api.herokuapp.com/v2
-
+let input = document.querySelector('.search__field');
+let results = document.querySelector('.results');
 ///////////////////////////////////////
 let renderSpinner = function (parenEL) {
   let markup = `<div class="spinner">
@@ -20,6 +22,18 @@ let renderSpinner = function (parenEL) {
   recipeContainer.innerHTML = '';
   parenEL.insertAdjacentHTML('afterbegin', markup);
 };
+let renderError = function () {
+  let markup = `<div class="error">
+            <div>
+              <svg>
+                <use href="src/img/icons.svg#icon-alert-triangle"></use>
+              </svg>
+            </div>
+            <p>No recipes found for your query. Please try again!</p>
+          </div>`;
+  recipeContainer.innerHTML = '';
+  recipeContainer.insertAdjacentHTML('afterbegin', markup);
+};
 let showRecipe = function () {
   //1 loading recipes
   let id = window.location.hash.slice(1);
@@ -28,9 +42,10 @@ let showRecipe = function () {
   fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`)
     .then(response => {
       if (!response.ok) {
-        throw new Error('something went wrong');
+        throw new Error();
+      } else {
+        return response.json();
       }
-      return response.json();
     })
     .then(data => {
       let { recipe } = data.data;
@@ -133,10 +148,64 @@ let showRecipe = function () {
 
       recipeContainer.insertAdjacentHTML('beforeend', markup);
     })
-    .catch(e => alert(e));
+    .catch(e => {
+      recipeContainer.innerHTML = '';
+      renderError();
+    });
 
   //2 RENDERING RECIPES
 };
 ['hashchange', 'load'].forEach(el => {
   window.addEventListener(el, showRecipe);
 });
+let searchResults = function (str) {
+  renderSpinner(results);
+  fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${str}`)
+    .then(response => response.json())
+    .then(data => {
+      results.innerHTML = '';
+      if (!data.results) {
+        throw new Error();
+      }
+      console.log(data);
+
+      data.data.recipes
+        .map(el => {
+          let markup = ` <li class="preview">
+            <a class="preview__link preview__link--active" href="#23456">
+              <figure class="preview__fig">
+                <img src="${el.image_url}" alt="Test" />
+              </figure>
+              <div class="preview__data">
+                <h4 class="preview__title">${el.title}</h4>
+                <p class="preview__publisher">${el.publisher}</p>
+                <div class="preview__user-generated">
+                  <svg>
+                    <use href="src/img/icons.svg#icon-user"></use>
+                  </svg>
+                </div>
+              </div>
+            </a>
+          </li>`;
+          results.innerHTML += markup;
+        })
+        .join('');
+
+      console.log(markup);
+    })
+    .catch(e => {
+      recipeContainer.innerHTML = '';
+      renderError();
+    });
+};
+
+function showInputs(e) {
+  e.preventDefault();
+  recipeContainer.innerHTML = '';
+  console.log(input.value);
+  searchResults(input.value);
+  input.value = '';
+}
+let btnSearch = document
+  .querySelector('.search__btn')
+  .addEventListener('click', showInputs);
