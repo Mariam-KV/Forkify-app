@@ -1,14 +1,14 @@
-export const recipeContainer = document.querySelector('.recipe');
-import { renderError, renderSpinner } from './script.js';
+export const recipeContainer = document.querySelector(".recipe");
+import { renderError, renderSpinner } from "./script.js";
 export let showRecipe = function () {
   //1 loading recipes
   let id = window.location.hash.slice(1);
   if (!id) return;
   renderSpinner(recipeContainer);
   fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}`)
-    .then(response => response.json())
+    .then((response) => response.json())
 
-    .then(data => {
+    .then((data) => {
       let { recipe } = data.data;
 
       let markup = ` <figure class="recipe__fig">
@@ -43,7 +43,7 @@ export let showRecipe = function () {
                   <use href="src/img/icons.svg#icon-minus-circle"></use>
                 </svg>
               </button>
-              <button class="btn--tiny btn--increase-servings">
+              <button class="btn--tiny btn--decrease-servings">
                 <svg>
                   <use href="src/img/icons.svg#icon-plus-circle"></use>
                 </svg>
@@ -67,13 +67,13 @@ export let showRecipe = function () {
           <h2 class="heading--2">Recipe ingredients</h2>
           <ul class="recipe__ingredient-list">
             ${recipe.ingredients
-              .map(el => {
+              .map((el) => {
                 return `<li class="recipe__ingredient">
               <svg class="recipe__icon">
                 <use href="src/img/icons.svg#icon-check"></use>
               </svg>
               <div class="recipe__quantity">${
-                el.quantity ? el.quantity : ''
+                el.quantity ? el.quantity : ""
               }</div>
               <div class="recipe__description">
                 <span class="recipe__unit">${el.unit}</span>
@@ -81,7 +81,7 @@ export let showRecipe = function () {
               </div>
             </li>`;
               })
-              .join('')}
+              .join("")}
           </ul>
         </div>
 
@@ -105,12 +105,39 @@ export let showRecipe = function () {
             </svg>
           </a>
         </div>`;
-      recipeContainer.innerHTML = '';
+      recipeContainer.innerHTML = "";
+      recipeContainer.insertAdjacentHTML("beforeend", markup);
+      let servings = document.querySelector(".recipe__info-data--people");
+      let quantity = document.querySelectorAll(".recipe__quantity");
 
-      recipeContainer.insertAdjacentHTML('beforeend', markup);
+      document
+        .querySelector(".btn--decrease-servings")
+        .addEventListener("click", handlerServingsU);
+      document
+        .querySelector(".btn--increase-servings")
+        .addEventListener("click", handlerServingsD);
+      function quantityAll(newservings, old) {
+        quantity.forEach((el) => {
+          if (el.innerHTML != "") {
+            el.innerHTML = (el.innerHTML * newservings) / old;
+          }
+        });
+      }
+      function handlerServingsD() {
+        if (Number(servings.innerHTML) > 1) {
+          let old = servings.innerHTML;
+          servings.innerHTML -= 1;
+          quantityAll(Number(servings.innerHTML), Number(old));
+        }
+      }
+      function handlerServingsU() {
+        let old = servings.innerHTML;
+        servings.innerHTML = Number(servings.innerHTML) + 1;
+        quantityAll(Number(servings.innerHTML), Number(old));
+      }
     })
-    .catch(e => {
-      recipeContainer.innerHTML = '';
+    .catch((e) => {
+      recipeContainer.innerHTML = "";
       renderError();
     });
 };
