@@ -1,7 +1,7 @@
 import { showRecipe, recipeContainer } from "./showRecipe.js";
 import { searchResults, results } from "./searchResults.js";
 let searchResultsV = document.querySelector(".search-results");
-let message = document.querySelector(".message");
+let message = document.querySelector(".recipe");
 let input = document.querySelector(".search__field");
 
 const timeout = function (s) {
@@ -36,11 +36,15 @@ export let renderError = function () {
 
 function showInputs(e) {
   e.preventDefault();
-  searchResults(input.value);
-  input.value = "";
+  if (input.value === "") {
+  } else {
+    searchResults(input.value);
+    input.value = "";
+  }
 }
 document.querySelector(".search__btn").addEventListener("click", showInputs);
-
-["hashchange", "load"].forEach((el) => {
-  window.addEventListener(el, showRecipe);
+//don't sure about using it or not
+window.addEventListener("hashchange", showRecipe);
+window.addEventListener("load", () => {
+  window.location.hash = "";
 });
