@@ -53,11 +53,7 @@ export let showRecipe = function () {
             </div>
           </div>
 
-          <div class="recipe__user-generated">
-            <svg>
-              <use href="src/img/icons.svg#icon-user"></use>
-            </svg>
-          </div>
+         
           <button class="btn--round">
             <svg class="">
               <use class ="bookmark" href="src/img/icons.svg#icon-bookmark"></use>
@@ -131,7 +127,7 @@ export let showRecipe = function () {
             bookList.splice(m, 1);
             bookmarksList.removeChild(h);
             resultS.prepend(h);
-           
+
             if (bookList.length == 0) {
               messageB.style.display = "flex";
               //bookmarksList.appendChild(messageB);
