@@ -1,5 +1,7 @@
 export const recipeContainer = document.querySelector(".recipe");
 import { renderError, renderSpinner } from "./script.js";
+let bookList = [];
+
 export let showRecipe = function () {
   //1 loading recipes
   let id = window.location.hash.slice(1);
@@ -58,7 +60,7 @@ export let showRecipe = function () {
           </div>
           <button class="btn--round">
             <svg class="">
-              <use href="src/img/icons.svg#icon-bookmark-fill"></use>
+              <use class ="bookmark" href="src/img/icons.svg#icon-bookmark"></use>
             </svg>
           </button>
         </div>
@@ -109,7 +111,39 @@ export let showRecipe = function () {
       recipeContainer.insertAdjacentHTML("beforeend", markup);
       let servings = document.querySelector(".recipe__info-data--people");
       let quantity = document.querySelectorAll(".recipe__quantity");
+      let use = document.querySelector(".bookmark");
+      let bookmarksList = document.querySelector(".bookmarks__list");
+      let h = document.getElementById(window.location.hash);
+      let messageB = document.getElementById("bMessage");
 
+      let btn = document
+        .querySelector(".btn--round")
+        .addEventListener("click", () => {
+          //document.getElementById("bMessage").outerHTML = "";
+
+          if (
+            use.getAttribute("href") == "src/img/icons.svg#icon-bookmark-fill"
+          ) {
+            use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
+            bookList.pop(window.location.hash);
+            bookmarksList.removeChild(h);
+          } else {
+            use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
+            bookList.push(window.location.hash);
+
+            bookmarksList.appendChild(h);
+          }
+        });
+      if (bookList.includes(window.location.hash)) {
+        use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
+      }
+      /*
+      if (bookList.includes(window.location.hash)) {
+        bookmarksList.removeChild(messageB);
+        use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
+      } else {
+        bookmarksList.appendChild(messageB);
+      }*/
       document
         .querySelector(".btn--decrease-servings")
         .addEventListener("click", handlerServingsU);

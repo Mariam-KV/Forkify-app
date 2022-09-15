@@ -14,7 +14,7 @@ export let searchResults = function (str) {
 
       data.data.recipes
         .map((el) => {
-          let markup = ` <li class="preview">
+          let markup = ` <li class="preview" id="#${el.id}">
             <a class="preview__link preview__link--active" href="#${el.id}">
               <figure class="preview__fig">
                 <img src="${el.image_url}" alt="Test" />
