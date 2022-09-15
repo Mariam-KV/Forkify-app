@@ -114,6 +114,8 @@ export let showRecipe = function () {
       let use = document.querySelector(".bookmark");
       let bookmarksList = document.querySelector(".bookmarks__list");
       let h = document.getElementById(window.location.hash);
+      let resultS = document.querySelector(".search-results");
+
       let messageB = document.getElementById("bMessage");
 
       let btn = document
@@ -125,12 +127,14 @@ export let showRecipe = function () {
             use.getAttribute("href") == "src/img/icons.svg#icon-bookmark-fill"
           ) {
             use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
-            bookList.pop(window.location.hash);
+            let m = bookList.indexOf(window.location.hash);
+            delete bookList[m];
             bookmarksList.removeChild(h);
+            resultS.prepend(h);
           } else {
             use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
             bookList.push(window.location.hash);
-
+            messageB.style.display = "none";
             bookmarksList.appendChild(h);
           }
         });
