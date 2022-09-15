@@ -128,9 +128,14 @@ export let showRecipe = function () {
           ) {
             use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
             let m = bookList.indexOf(window.location.hash);
-            delete bookList[m];
+            bookList.splice(m, 1);
             bookmarksList.removeChild(h);
             resultS.prepend(h);
+           
+            if (bookList.length == 0) {
+              messageB.style.display = "flex";
+              //bookmarksList.appendChild(messageB);
+            }
           } else {
             use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
             bookList.push(window.location.hash);
