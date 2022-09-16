@@ -1,10 +1,12 @@
 .header {
-  grid-area: head;
   background-color: $color-grey-light-1;
   display: flex;
+  flex-wrap: wrap;
+  padding: 3rem;
   align-items: center;
   justify-content: space-between;
-
+  grid-row: 1/2;
+  grid-column: 1/-1;
   &__logo {
     margin-left: 4rem;
     height: 4.6rem;
@@ -13,11 +15,11 @@
 }
 
 .search {
-  background-color: #fff;
+  background-color: #f2efee;
   border-radius: 10rem;
   display: flex;
   align-items: center;
-  padding-left: 3rem;
+
   transition: all 0.3s;
 
   &:focus-within {
@@ -31,22 +33,19 @@
     font-family: inherit;
     color: inherit;
     font-size: 1.7rem;
-    width: 30rem;
+    width: 25rem;
+    padding: 0 1rem;
 
     &:focus {
       outline: none;
     }
 
     &::placeholder {
-      color: $color-grey-light-3;
+      color: #f48982;
     }
 
     @media only screen and (max-width: $bp-medium) {
       width: auto;
-
-      &::placeholder {
-        color: white;
-      }
     }
   }
 

@@ -1,7 +1,41 @@
-@import 'base';
-@import 'components';
-@import 'header';
-@import 'preview';
-@import 'searchResults';
-@import 'recipe';
-@import 'upload';
+@import "base";
+@import "components";
+@import "header";
+@import "preview";
+@import "searchResults";
+@import "recipe";
+@import "upload";
+@media (max-width: 800px) {
+  .search-results {
+    max-height: 40vh;
+    grid-column: 1/-1;
+
+    margin: 0 auto;
+  }
+  .container {
+    grid-template-rows: 20rem minmax(20rem, auto);
+    gap: 5rem;
+  }
+  .recipe {
+    grid-column: 1/-1;
+  }
+  .header {
+    justify-content: center;
+    gap: 3rem;
+  }
+}
+@media (max-width: 500px) {
+  .recipe__ingredient {
+    grid-column: 1/-1;
+  }
+  .recipe__ingredients {
+    padding: 5rem 2rem;
+  }
+  .recipe__directions {
+    padding: 5rem 2rem;
+  }
+  .bookmarks {
+    left: -14rem;
+    right: 0;
+  }
+}

@@ -21,12 +21,6 @@ $bp-smallest: 31.25em; // 500px
   padding: 0;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
 html {
   box-sizing: border-box;
   font-size: 62.5%;
@@ -37,7 +31,7 @@ html {
 }
 
 body {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: "Nunito Sans", sans-serif;
   font-weight: 400;
   line-height: 1.6;
   color: $color-grey-dark-1;
@@ -54,14 +48,12 @@ body {
   background-color: #fff;
   border-radius: 9px;
   overflow: hidden;
+  gap: 3rem;
   box-shadow: 0 2rem 6rem 0.5rem rgba($color-grey-dark-1, 0.2);
 
   display: grid;
   grid-template-rows: 10rem minmax(100rem, auto);
   grid-template-columns: 1fr 2fr;
-  grid-template-areas:
-    'head head'
-    'list recipe';
 
   @media only screen and (max-width: $bp-large) {
     max-width: 100%;
