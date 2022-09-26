@@ -3,14 +3,7 @@ import { searchResults, results } from "./searchResults.js";
 let searchResultsV = document.querySelector(".search-results");
 let message = document.querySelector(".recipe");
 let input = document.querySelector(".search__field");
-
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
+export let bookmarksList = document.querySelector(".bookmarks__list");
 
 export let renderSpinner = function (parenEL) {
   let markup = `<div class="spinner">
@@ -45,6 +38,9 @@ function showInputs(e) {
 document.querySelector(".search__btn").addEventListener("click", showInputs);
 //don't sure about using it or not
 window.addEventListener("hashchange", showRecipe);
-window.addEventListener("load", () => {
-  window.location.hash = "";
-});
+
+let init = function () {
+  let storage = localStorage.getItem("list");
+  bookmarksList.innerHTML = storage;
+};
+init();

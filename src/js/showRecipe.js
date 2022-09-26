@@ -1,7 +1,7 @@
 export const recipeContainer = document.querySelector(".recipe");
 import { renderError, renderSpinner } from "./script.js";
 let bookList = [];
-
+import { bookmarksList } from "./script.js";
 export let showRecipe = function () {
   //1 loading recipes
   let id = window.location.hash.slice(1);
@@ -108,7 +108,7 @@ export let showRecipe = function () {
       let servings = document.querySelector(".recipe__info-data--people");
       let quantity = document.querySelectorAll(".recipe__quantity");
       let use = document.querySelector(".bookmark");
-      let bookmarksList = document.querySelector(".bookmarks__list");
+
       let h = document.getElementById(window.location.hash);
       let resultS = document.querySelector(".search-results");
 
@@ -127,6 +127,7 @@ export let showRecipe = function () {
             bookList.splice(m, 1);
             bookmarksList.removeChild(h);
             resultS.prepend(h);
+            persistBookmarks();
 
             if (bookList.length == 0) {
               messageB.style.display = "flex";
@@ -137,18 +138,16 @@ export let showRecipe = function () {
             bookList.push(window.location.hash);
             messageB.style.display = "none";
             bookmarksList.appendChild(h);
+            persistBookmarks();
           }
         });
       if (bookList.includes(window.location.hash)) {
         use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
       }
-      /*
-      if (bookList.includes(window.location.hash)) {
-        bookmarksList.removeChild(messageB);
-        use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
-      } else {
-        bookmarksList.appendChild(messageB);
-      }*/
+      let persistBookmarks = function () {
+        localStorage.setItem("list", bookmarksList.innerHTML);
+      };
+
       document
         .querySelector(".btn--decrease-servings")
         .addEventListener("click", handlerServingsU);
