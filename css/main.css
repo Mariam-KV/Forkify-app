@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+.copyH, .copyBook {
+  display: none;
+}
+
 html {
   box-sizing: border-box;
   font-size: 62.5%;

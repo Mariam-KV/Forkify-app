@@ -110,9 +110,9 @@ export let showRecipe = function () {
       let quantity = document.querySelectorAll(".recipe__quantity");
       let use = document.querySelector(".bookmark");
       let b = localStorage.getItem("book");
-      if (b.includes(window.location.hash)) {
+      if (b != null && b.includes(window.location.hash)) {
         console.log(use.getAttribute("href"));
-        use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
+        use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
       }
       let h = document.getElementById(window.location.hash);
       let resultS = document.querySelector(".search-results");
@@ -125,7 +125,7 @@ export let showRecipe = function () {
       document.querySelector(".btn--round").addEventListener("click", () => {
         if (bookList.includes(window.location.hash)) {
           console.log(use.getAttribute("href"));
-          use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
+          use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
 
           let m = bookList.indexOf(window.location.hash);
 
