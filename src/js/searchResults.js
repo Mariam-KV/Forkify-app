@@ -1,6 +1,7 @@
 import { renderError, renderSpinner } from "./script.js";
 import { recipeContainer } from "./showRecipe.js";
 export let results = document.querySelector(".results");
+
 export let searchResults = function (str) {
   renderSpinner(results);
   fetch(`https://forkify-api.herokuapp.com/api/v2/recipes?search=${str}`)

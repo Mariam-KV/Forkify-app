@@ -114,9 +114,8 @@
   box-shadow: 0.3rem 0.1rem 1rem $color-grad-2;
   border: 2px solid $color-grad-2;
   border-radius: 1rem;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.5s 0.2s;
+  display: none;
+  transition: all 1s;
 
   &__list {
     list-style: none;
@@ -137,8 +136,7 @@
   }
 
   &:hover,
-  .nav__btn--bookmarks:hover + & {
-    visibility: visible;
-    opacity: 1;
+  .nav__btn:hover + & {
+    display: block;
   }
 }

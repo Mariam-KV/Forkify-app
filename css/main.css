@@ -329,9 +329,8 @@ body {
   box-shadow: 0.3rem 0.1rem 1rem #f48982;
   border: 2px solid #f48982;
   border-radius: 1rem;
-  visibility: hidden;
-  opacity: 0;
-  transition: all 0.5s 0.2s;
+  display: none;
+  transition: all 1s;
 }
 .bookmarks__list {
   list-style: none;
@@ -347,9 +346,8 @@ body {
 .bookmarks__field:hover {
   background-color: #f2efee;
 }
-.bookmarks:hover, .nav__btn--bookmarks:hover + .bookmarks {
-  visibility: visible;
-  opacity: 1;
+.bookmarks:hover, .nav__btn:hover + .bookmarks {
+  display: block;
 }
 
 .preview__link:link, .preview__link:visited {

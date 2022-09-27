@@ -2,6 +2,7 @@ export const recipeContainer = document.querySelector(".recipe");
 import { renderError, renderSpinner } from "./script.js";
 let bookList = [];
 import { bookmarksList } from "./script.js";
+
 export let showRecipe = function () {
   //1 loading recipes
   let id = window.location.hash.slice(1);
@@ -111,36 +112,38 @@ export let showRecipe = function () {
 
       let h = document.getElementById(window.location.hash);
       let resultS = document.querySelector(".search-results");
-
+      let cloneH = h.cloneNode(true);
+      console.log(h);
+      console.log(cloneH);
+      let copyH = document.getElementById("copyH").appendChild(cloneH);
       let messageB = document.getElementById("bMessage");
+      console.log(bookmarksList);
+      document.querySelector(".btn--round").addEventListener("click", () => {
+        if (
+          use.getAttribute("href") == "src/img/icons.svg#icon-bookmark-fill"
+        ) {
+          use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
+          let m = bookList.indexOf(window.location.hash);
+          messageB.style.display = "none";
+          bookmarksList.removeChild(cloneH);
 
-      let btn = document
-        .querySelector(".btn--round")
-        .addEventListener("click", () => {
-          //document.getElementById("bMessage").outerHTML = "";
+          persistBookmarks();
 
-          if (
-            use.getAttribute("href") == "src/img/icons.svg#icon-bookmark-fill"
-          ) {
-            use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
-            let m = bookList.indexOf(window.location.hash);
-            bookList.splice(m, 1);
-            bookmarksList.removeChild(h);
-            resultS.prepend(h);
-            persistBookmarks();
-
-            if (bookList.length == 0) {
-              messageB.style.display = "flex";
-              //bookmarksList.appendChild(messageB);
-            }
-          } else {
-            use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
-            bookList.push(window.location.hash);
-            messageB.style.display = "none";
-            bookmarksList.appendChild(h);
-            persistBookmarks();
+          if (bookList.length == 0) {
+            messageB.style.display = "flex";
+            //bookmarksList.appendChild(messageB);
           }
-        });
+        } else {
+          use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
+
+          messageB.style.display = "none";
+          if (!bookmarksList.childNodes[cloneH]) {
+            bookmarksList.appendChild(cloneH);
+          }
+
+          persistBookmarks();
+        }
+      });
       if (bookList.includes(window.location.hash)) {
         use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
       }

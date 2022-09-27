@@ -38,9 +38,14 @@ function showInputs(e) {
 document.querySelector(".search__btn").addEventListener("click", showInputs);
 //don't sure about using it or not
 window.addEventListener("hashchange", showRecipe);
-
+window.addEventListener("load", () => {
+  window.location.hash = "";
+});
 let init = function () {
   let storage = localStorage.getItem("list");
-  bookmarksList.innerHTML = storage;
+
+  if (storage) {
+    bookmarksList.innerHTML = storage;
+  }
 };
 init();
