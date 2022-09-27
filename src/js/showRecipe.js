@@ -109,46 +109,53 @@ export let showRecipe = function () {
       let servings = document.querySelector(".recipe__info-data--people");
       let quantity = document.querySelectorAll(".recipe__quantity");
       let use = document.querySelector(".bookmark");
-
+      let b = localStorage.getItem("book");
+      if (b.includes(window.location.hash)) {
+        console.log(use.getAttribute("href"));
+        use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
+      }
       let h = document.getElementById(window.location.hash);
       let resultS = document.querySelector(".search-results");
       let cloneH = h.cloneNode(true);
-      console.log(h);
-      console.log(cloneH);
+
       let copyH = document.getElementById("copyH").appendChild(cloneH);
       let messageB = document.getElementById("bMessage");
-      console.log(bookmarksList);
+      let hash = window.location.hash;
+
       document.querySelector(".btn--round").addEventListener("click", () => {
-        if (
-          use.getAttribute("href") == "src/img/icons.svg#icon-bookmark-fill"
-        ) {
+        if (bookList.includes(window.location.hash)) {
+          console.log(use.getAttribute("href"));
           use.setAttribute("href", "src/img/icons.svg#icon-bookmark");
+
           let m = bookList.indexOf(window.location.hash);
-          messageB.style.display = "none";
+
+          bookList.splice(m, 1);
           bookmarksList.removeChild(cloneH);
+          messageB.style.display = "none";
 
           persistBookmarks();
 
-          if (bookList.length == 0) {
+          if (bookmarksList.length == 0) {
             messageB.style.display = "flex";
             //bookmarksList.appendChild(messageB);
           }
         } else {
           use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
-
-          messageB.style.display = "none";
-          if (!bookmarksList.childNodes[cloneH]) {
+          if (!bookList.includes(cloneH)) {
+            console.log(8);
+            bookList.push(window.location.hash);
             bookmarksList.appendChild(cloneH);
+            messageB.style.display = "none";
           }
+          use.getAttribute("href") == "src/img/icons.svg#icon-bookmark-fill";
 
           persistBookmarks();
         }
       });
-      if (bookList.includes(window.location.hash)) {
-        use.setAttribute("href", "src/img/icons.svg#icon-bookmark-fill");
-      }
+
       let persistBookmarks = function () {
         localStorage.setItem("list", bookmarksList.innerHTML);
+        localStorage.setItem("book", bookList);
       };
 
       document
